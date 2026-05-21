@@ -1,26 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Attendance Tracker</title>
+  <title>College Attendance System</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
+
+<!-- LOGIN PAGE -->
+<div id="loginPage" class="page">
+  <div class="auth-box">
+    <h1>📚 Attendance System</h1>
+    <p>Login to continue</p>
+    <input type="email" id="loginEmail" placeholder="Email"/>
+    <input type="password" id="loginPassword" placeholder="Password"/>
+    <button onclick="login()">Login</button>
+    <p class="switch">Don't have account? <span onclick="showRegister()">Register</span></p>
+    <p id="loginError" class="error"></p>
+  </div>
+</div>
+
+<!-- REGISTER PAGE -->
+<div id="registerPage" class="page hidden">
+  <div class="auth-box">
+    <h1>📚 Register</h1>
+    <select id="registerRole">
+      <option value="teacher">Teacher</option>
+      <option value="student">Student</option>
+    </select>
+    <input type="text" id="registerName" placeholder="Full Name"/>
+    <input type="email" id="registerEmail" placeholder="Email"/>
+    <input type="password" id="registerPassword" placeholder="Password"/>
+    <button onclick="register()">Register</button>
+    <p class="switch">Already have account? <span onclick="showLogin()">Login</span></p>
+    <p id="registerError" class="error"></p>
+  </div>
+</div>
+
+<!-- TEACHER DASHBOARD -->
+<div id="teacherPage" class="page hidden">
   <div class="header">
-    <h1>📚 College Attendance Tracker</h1>
-    <p>Track your subject-wise attendance easily</p>
+    <h1>👨‍🏫 Teacher Dashboard</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
   </div>
   <div class="container">
-    <div class="add-subject">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('studentsTab')">Students</button>
+      <button class="tab" onclick="showTab('subjectsTab')">Subjects</button>
+      <button class="tab" onclick="showTab('attendanceTab')">Mark Attendance</button>
+      <button class="tab" onclick="showTab('timetableTab')">Timetable</button>
+      <button class="tab" onclick="showTab('reportsTab')">Reports</button>
+    </div>
+
+    <!-- Students Tab -->
+    <div id="studentsTab" class="tab-content">
+      <h2>Add Student</h2>
+      <div class="input-row">
+        <input type="text" id="studentName" placeholder="Student Name"/>
+        <input type="text" id="studentRoll" placeholder="Roll Number"/>
+        <button onclick="addStudent()">+ Add</button>
+      </div>
+      <div id="studentList"></div>
+    </div>
+
+    <!-- Subjects Tab -->
+    <div id="subjectsTab" class="tab-content hidden">
       <h2>Add Subject</h2>
       <div class="input-row">
-        <input type="text" id="subjectName" placeholder="Enter subject name" />
+        <input type="text" id="subjectName" placeholder="Subject Name"/>
+        <input type="text" id="subjectCode" placeholder="Subject Code"/>
         <button onclick="addSubject()">+ Add</button>
       </div>
+      <div id="subjectList"></div>
     </div>
-    <div id="subjectList"></div>
+
+    <!-- Mark Attendance Tab -->
+    <div id="attendanceTab" class="tab-content hidden">
+      <h2>Mark Attendance</h2>
+      <div class="input-row">
+        <select id="attendSubject"></select>
+        <input type="date" id="attendDate"/>
+        <button onclick="loadAttendance()">Load</button>
+      </div>
+      <div id="attendanceForm"></div>
+      <button id="saveAttendBtn" class="hidden" onclick="saveAttendance()">💾 Save Attendance</button>
+    </div>
+
+    <!-- Timetable Tab -->
+    <div id="timetableTab" class="tab-content hidden">
+      <h2>Set Timetable</h2>
+      <div id="timetableForm"></div>
+      <button onclick="saveTimetable()">💾 Save Timetable</button>
+      <div id="timetableView"></div>
+    </div>
+
+    <!-- Reports Tab -->
+    <div id="reportsTab" class="tab-content hidden">
+      <h2>Attendance Reports</h2>
+      <select id="reportSubject" onchange="loadReport()"></select>
+      <div id="reportTable"></div>
+    </div>
   </div>
-  <script src="script.js"></script>
+</div>
+
+<!-- STUDENT DASHBOARD -->
+<div id="studentPage" class="page hidden">
+  <div class="header">
+    <h1>🎓 Student Dashboard</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+  <div class="container">
+    <h2 id="studentWelcome"></h2>
+    <div id="studentAttendance"></div>
+    <div id="studentTimetable"></div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
