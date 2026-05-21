@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Attendance Tracker</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="header">
+    <h1>📚 College Attendance Tracker</h1>
+    <p>Track your subject-wise attendance easily</p>
+  </div>
+  <div class="container">
+    <div class="add-subject">
+      <h2>Add Subject</h2>
+      <div class="input-row">
+        <input type="text" id="subjectName" placeholder="Enter subject name" />
+        <button onclick="addSubject()">+ Add</button>
+      </div>
+    </div>
+    <div id="subjectList"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
